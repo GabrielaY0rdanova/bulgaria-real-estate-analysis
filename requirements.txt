@@ -1,0 +1,9 @@
+# Bulgaria Real Estate Analysis
+# Python 3.11
+
+# Data processing
+pandas==2.2.3
+
+# Visualisation
+matplotlib==3.9.4
+seaborn==0.13.2
