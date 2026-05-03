@@ -181,10 +181,10 @@ Each script prints a `=== KEY FINDINGS ===` summary to stdout on completion.
 
 This analysis is Stage 3 of a four-stage data platform:
 
-- ✅ **`bulgaria-real-estate-scraper`** — requests + BeautifulSoup scraper for imot.bg
-- ✅ **`bulgaria-real-estate-cleaning`** — Deduplication, field parsing and normalisation, PostgreSQL load
-- ✅ **`bulgaria-real-estate-analysis`** — You are here
-- 📊 **`bulgaria-real-estate-visualization`** — Interactive Power BI dashboard
+- ✅ `bulgaria-real-estate-scraper` — requests + BeautifulSoup scraper for imot.bg
+- ✅ `bulgaria-real-estate-cleaning` — Deduplication, field parsing and normalisation, PostgreSQL load
+- ✅ `bulgaria-real-estate-analysis` — You are here
+- ✅ `bulgaria-real-estate-visualization` — Interactive Power BI dashboard
 
 ---
 
