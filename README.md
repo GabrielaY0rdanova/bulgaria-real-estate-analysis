@@ -7,15 +7,15 @@
 [![Kaggle](https://img.shields.io/badge/Kaggle-Dataset-orange?logo=kaggle&logoColor=white)](https://www.kaggle.com/datasets/gabrielagencheva/bulgaria-real-estate-listings)
 [![License](https://img.shields.io/badge/License-MIT-lightgrey)](LICENSE.txt)
 
+
 ## 📖 Overview
 
-Exploratory analysis of the Bulgarian residential and commercial property market, based on **192,004 deduplicated listings** scraped from [imot.bg](https://www.imot.bg) in April 2026.
+Exploratory analysis of the Bulgarian residential and commercial property market, based on **61,487 deduplicated listings** scraped from [imot.bg](https://www.imot.bg) across two runs in April and May 2026.
 
 Five focused analysis scripts cover market composition, price distributions, geographic patterns, and the price impact of property features. Each script is self-contained, prints a summary of key findings to stdout, and saves chart outputs to `outputs/figures/`.
 
 Part of a larger **Real Estate Data Platform**: [`real_estate_scraper`](https://github.com/GabrielaY0rdanova/bulgaria-real-estate-scraper) → [`real_estate_cleaning`](https://github.com/GabrielaY0rdanova/bulgaria-real-estate-cleaning) → [`real_estate_analysis`](https://github.com/GabrielaY0rdanova/bulgaria-real-estate-analysis) → `real_estate_visualization`
 
----
 
 ## 📊 Dataset
 
@@ -29,16 +29,15 @@ The `data/` directory is gitignored — nothing is committed to this repo.
 
 | Table | Rows | Description |
 |---|---|---|
-| `listings.csv` | 192,004 | One row per listing — price, transaction type, status, dates |
-| `properties.csv` | 192,004 | Physical property attributes — area, floor, bedrooms, year built |
-| `geographies.csv` | 4,253 | Three-level hierarchy: region → locality → area |
-| `contacts.csv` | 23,535 | Agencies and owners |
+| `listings.csv` | 61,487 | One row per listing — price, transaction type, status, dates |
+| `properties.csv` | 61,487 | Physical property attributes — area, floor, bedrooms, year built |
+| `geographies.csv` | 3,285 | Three-level hierarchy: region → locality → area |
+| `contacts.csv` | 15,315 | Agencies and owners |
 | `property_types.csv` | 46 | Property type lookup with English names and category |
 | `construction_types.csv` | 6 | Construction material lookup |
 | `features.csv` | 46 | Amenity feature lookup |
-| `property_features.csv` | 444,084 | Junction table: property ↔ features |
+| `property_features.csv` | 159,014 | Junction table: property ↔ features |
 
----
 
 ## 🗂️ Project Structure
 
@@ -83,7 +82,6 @@ bulgaria-real-estate-analysis/
 └── README.md
 ```
 
----
 
 ## 🏗️ Architecture
 
@@ -112,22 +110,20 @@ The geography table uses a three-level hierarchy (`region → locality → area`
 
 Price and area outliers are flagged using IQR × 3.0, computed per property type group (mirroring the cleaning pipeline logic). All distribution and uplift analyses in scripts 03–05 exclude flagged outliers — a small number of extreme listings would otherwise collapse the scale or mislead the feature uplift calculations.
 
----
 
 ## 📈 Key Findings
 
 Full writeup in [`findings.md`](outputs\findings.md). Headlines:
 
-- **80.8% of listings are sales** (155,063); rentals 19.2% (36,941)
-- **94.2% listed by agencies** — owner-direct listings are a small minority at 5.8%
-- **National median sale price: €135,000** — mean is €247,681 (1.8×), heavily skewed by luxury listings. Always use the median for Bulgarian property comparisons
-- **Sofia median: €244,990** — 1.8× the national median; apartment €/m² of €2,543 vs a national average of €1,539
-- **Garage is the most valuable feature**: +43.8% on sale price, +55.4% on monthly rent
-- **Needs renovation** carries a −32.6% discount on sale price; the market explicitly prices in refurbishment cost
-- **Furnished matters for rentals (+13.2%), not sales (+1.8%)** — on the sale market it's nearly a wash
-- **Insulated/renovated**: 4th most advertised feature, zero rental uplift — tenants treat it as table stakes
+- **70.1% of listings are sales** (43,105); rentals 29.9% (18,382)
+- **88.1% listed by agencies** — owner-direct listings are a small minority at 11.9%
+- **National median sale price: €119,000** — mean is €265,813 (2.2×), heavily skewed by luxury listings. Always use the median for Bulgarian property comparisons
+- **Sofia median: €227,000** — 1.9× the national median; apartment €/m² of €2,600 vs a national top-10 average of €1,607
+- **Garage is the most valuable feature**: +32.2% on sale price, +45.3% on monthly rent
+- **Needs renovation** carries a −29.7% discount on sale price; the market explicitly prices in refurbishment cost
+- **Furnished matters more for rentals (+5.5%) than sales (+14.9%)**
+- **Elevator** is the most advertised amenity at 52% of residential listings
 
----
 
 ## 🚀 How to Run
 
@@ -156,7 +152,6 @@ python 06_export_for_powerbi.py   # data/df_powerbi.csv → Power BI dashboard
 
 Each script prints a `=== KEY FINDINGS ===` summary to stdout on completion.
 
----
 
 ## 💡 Notes
 
@@ -166,7 +161,6 @@ Each script prints a `=== KEY FINDINGS ===` summary to stdout on completion.
 - **`date_posted` null for ~72% of listings.** Time-series trend analysis is not viable from this snapshot. All findings are cross-sectional (April 2026).
 - **`price_on_request`** accounts for 2,364 listings (1.5% of sales) — these have no `price` value and are excluded from all price analyses automatically via `dropna()`.
 
----
 
 ## 🛠️ Technologies Used
 
@@ -175,18 +169,16 @@ Each script prints a `=== KEY FINDINGS ===` summary to stdout on completion.
 - **matplotlib 3.9** — all chart output
 - **seaborn 0.13** — heatmap (script 05)
 
----
 
 ## 🚀 Upcoming Projects
 
 This analysis is Stage 3 of a four-stage data platform:
 
-- ✅ `bulgaria-real-estate-scraper` — requests + BeautifulSoup scraper for imot.bg
+- ✅ `bulgaria-real-estate-scraper` — requests + BeautifulSoup scraper for imot.bg, full + incremental runs
 - ✅ `bulgaria-real-estate-cleaning` — Deduplication, field parsing and normalisation, PostgreSQL load
 - ✅ `bulgaria-real-estate-analysis` — You are here
 - ✅ `bulgaria-real-estate-visualization` — Interactive Power BI dashboard
 
----
 
 ## 👩‍💻 About Me
 
@@ -194,9 +186,8 @@ Hi! I'm [Gabriela Yordanova](https://www.linkedin.com/in/gabriela-yordanova-837b
 
 Nearly 3 years working across multiple real estate agencies in Varna means I can read these numbers in context — I've priced apartments, navigated the Black Sea coastal market firsthand, and know which amenities actually move buyers versus which ones just fill the listing form.
 
-This project is Stage 3 of a four-stage **Real Estate Data Platform** I'm building end-to-end. The analysis turns 192,000 listings into concrete market insights — price distributions, regional premiums, and feature uplift — demonstrating my skills in **Python, exploratory data analysis, and data storytelling**.
+This project is Stage 3 of a four-stage **Real Estate Data Platform** I'm building end-to-end. The analysis turns 61,000+ listings into concrete market insights — price distributions, regional premiums, and feature uplift — demonstrating my skills in **Python, exploratory data analysis, and data storytelling**.
 
----
 
 ## 🛡️ License
 

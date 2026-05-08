@@ -229,14 +229,14 @@ for col in ["transaction_type", "property_type_en", "region_en", "locality_en"]:
 
 # Spot-check key values
 sale_median = out.loc[out["transaction_type"] == "sale", "price"].median()
-print(f"\n  Median sale price:      €{sale_median:,.0f}  (expected ~€135,000)")
+print(f"  Median sale price:      €{sale_median:,.0f}")
 
 apt_ppm2_median = out.loc[
     (out["transaction_type"] == "sale") &
     (out["property_type_en"] == "apartment") &
     out["price_per_m2"].notna()
 , "price_per_m2"].median()
-print(f"  Apartment median €/m²:  €{apt_ppm2_median:,.0f}  (expected ~€1,256)")
+print(f"  Apartment median €/m²:  €{apt_ppm2_median:,.0f}")
 
 # =============================================================================
 # SUMMARY
@@ -275,4 +275,12 @@ out_file = OUT_PATH / "df_powerbi.csv"
 out.to_csv(out_file, index=False, encoding="utf-8-sig")
 print(f"\ndf_powerbi.csv saved to: {out_file}")
 print(f"File size: {out_file.stat().st_size / 1_048_576:.1f} MB")
+
+# --- price history ---
+price_history = pd.read_csv(CLEAN_PATH / "price_history.csv")
+price_history_file = OUT_PATH / "df_price_history.csv"
+price_history.to_csv(price_history_file, index=False, encoding="utf-8-sig")
+print(f"\ndf_price_history.csv saved to: {price_history_file}")
+print(f"  {len(price_history):,} price change rows")
+
 print("\n06_export_for_powerbi.py complete.")
